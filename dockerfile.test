@@ -1,0 +1,15 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY api/ ./api/
+COPY tests/ ./tests/
+COPY . .
+
+RUN python -c "import api; import tests"
+
+CMD ["pytest", "tests/", "-v", "--tb=short"]
