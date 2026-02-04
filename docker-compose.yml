@@ -1,0 +1,16 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./api:/app/api  
+    command: uvicorn api.app:app --host 0.0.0.0 --port 8000 --reload
+
+  tests:
+    build:
+      context: .
+      dockerfile: dockerfile.test
+    volumes:
+      - .:/app
+    command: python -m pytest -k 'TestApi' -v
