@@ -1,0 +1,696 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    overflow: hidden;
+}
+
+/* Заголовок */
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+header h1 {
+    color: #2c3e50;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+header .subtitle {
+    color: #7f8c8d;
+    font-size: 1.1rem;
+}
+
+/* Стили для поиска */
+.search-task {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 30px;
+    border-left: 5px solid #2ecc71;
+}
+
+.search-task h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.search-note {
+    color: #7f8c8d;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    border-left: 3px solid #3498db;
+}
+
+.search-note i {
+    color: #3498db;
+    margin-right: 5px;
+}
+
+.search-input-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.search-input-group input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 2px solid #dfe6e9;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.search-input-group input:focus {
+    outline: none;
+    border-color: #2ecc71;
+}
+
+.search-result {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: white;
+    border: 1px solid #eaeaea;
+    display: none;
+}
+
+.search-result.show {
+    display: block;
+}
+
+.single-task {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.single-task:last-child {
+    border-bottom: none;
+}
+
+.single-task h4 {
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+.single-task p {
+    margin-bottom: 8px;
+    color: #555;
+}
+
+/* Форма */
+.task-form {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 30px;
+    border-left: 5px solid #3498db;
+}
+
+.task-form h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #34495e;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #dfe6e9;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+}
+
+.btn-secondary {
+    background-color: #95a5a6;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #7f8c8d;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+}
+
+.btn-edit {
+    background-color: #f39c12;
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #d68910;
+}
+
+/* Таблица */
+.task-table {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.table-header h2 {
+    color: #2c3e50;
+    font-size: 1.5rem;
+}
+
+.loading {
+    color: #3498db;
+    font-weight: 500;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #2c3e50;
+    color: white;
+}
+
+thead th {
+    padding: 15px 12px;
+    text-align: left;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Выравнивание заголовков по левому краю */
+thead th:nth-child(1) { /* ID */
+    text-align: left;
+    padding-left: 15px;
+}
+
+thead th:nth-child(2) { /* Заголовок */
+    text-align: left;
+}
+
+thead th:nth-child(3) { /* Описание */
+    text-align: left;
+}
+
+thead th:nth-child(4) { /* Приоритет */
+    text-align: left;
+}
+
+thead th:nth-child(5) { /* Действия */
+    text-align: left;
+    padding-left: 20px;
+}
+
+/* Уменьшил отступы для более компактной таблицы */
+tbody tr {
+    border-bottom: 1px solid #eaeaea;
+    transition: background-color 0.2s;
+}
+
+tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+tbody td {
+    padding: 12px;
+    vertical-align: middle;
+}
+
+/* Выравнивание ячеек по левому краю */
+tbody td:nth-child(1) { /* ID */
+    text-align: left;
+    padding-left: 15px;
+}
+
+tbody td:nth-child(2) { /* Заголовок */
+    text-align: left;
+}
+
+tbody td:nth-child(3) { /* Описание */
+    text-align: left;
+}
+
+tbody td:nth-child(4) { /* Приоритет */
+    text-align: left;
+}
+
+tbody td:nth-child(5) { /* Действия */
+    text-align: left;
+    padding-left: 20px;
+}
+
+/* Стили для кнопок действий - ВЫРАВНИВАНИЕ ВЛЕВО */
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-start; /* Сдвигаем влево */
+    align-items: center;
+}
+
+.btn-action {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+}
+
+.btn-edit {
+    color: #0d6efd;
+    background-color: rgba(13, 110, 253, 0.1);
+    border: 1px solid rgba(13, 110, 253, 0.2);
+}
+
+.btn-edit:hover {
+    background-color: rgba(13, 110, 253, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(13, 110, 253, 0.2);
+}
+
+.btn-delete {
+    color: #dc3545;
+    background-color: rgba(220, 53, 69, 0.1);
+    border: 1px solid rgba(220, 53, 69, 0.2);
+}
+
+.btn-delete:hover {
+    background-color: rgba(220, 53, 69, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
+}
+
+.priority-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.priority-low {
+    background-color: #d5f4e6;
+    color: #27ae60;
+}
+
+.priority-medium {
+    background-color: #fff4e6;
+    color: #f39c12;
+}
+
+.priority-high {
+    background-color: #ffe6e6;
+    color: #e74c3c;
+}
+
+/* Сообщения */
+#messageArea {
+    margin-top: 20px;
+}
+
+.message {
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.message-success {
+    background-color: #d4edda;
+    color: #155724;
+    border-left: 5px solid #28a745;
+}
+
+.message-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-left: 5px solid #dc3545;
+}
+
+.message i {
+    font-size: 1.2rem;
+}
+
+.message-success i {
+    color: #28a745;
+}
+
+.message-error i {
+    color: #dc3545;
+}
+
+/* Состояние "нет данных" */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #95a5a6;
+    display: none;
+}
+
+.empty-state i {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    opacity: 0.5;
+}
+
+.empty-state p {
+    font-size: 1.2rem;
+}
+
+/* Модальное окно */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.modal.show {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background-color: white;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transform: translateY(-20px);
+    transition: transform 0.3s;
+}
+
+.modal.show .modal-content {
+    transform: translateY(0);
+}
+
+.modal-header {
+    padding: 20px 25px;
+    border-bottom: 1px solid #eaeaea;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    border-radius: 12px 12px 0 0;
+}
+
+.modal-header h3 {
+    color: #2c3e50;
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.modal-header h3 i {
+    color: #e74c3c;
+    margin-right: 10px;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: #7f8c8d;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s;
+}
+
+.modal-close:hover {
+    background-color: #eaeaea;
+    color: #2c3e50;
+}
+
+.modal-body {
+    padding: 25px;
+}
+
+.warning-icon {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.warning-icon i {
+    font-size: 3.5rem;
+    color: #e74c3c;
+    background-color: rgba(231, 76, 60, 0.1);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.modal-body p {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.task-preview {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 20px 0;
+    border-left: 3px solid #3498db;
+}
+
+.task-preview h4 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.task-preview p {
+    text-align: left;
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.warning-text {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    border-left: 3px solid #ffc107;
+    text-align: left;
+}
+
+.warning-text i {
+    margin-right: 8px;
+}
+
+.modal-footer {
+    padding: 20px 25px;
+    border-top: 1px solid #eaeaea;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    background-color: #f8f9fa;
+    border-radius: 0 0 12px 12px;
+}
+
+/* Подсветка найденной задачи в таблице */
+tr.highlighted {
+    background-color: #fffde7 !important;
+    box-shadow: 0 0 0 2px #ffeb3b;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 2px rgba(255, 235, 59, 0.7); }
+    50% { box-shadow: 0 0 0 4px rgba(255, 235, 59, 0.4); }
+    100% { box-shadow: 0 0 0 2px rgba(255, 235, 59, 0.7); }
+}
+
+/* Кнопки в результатах поиска */
+.single-task .mt-3 {
+    display: flex;
+    gap: 12px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .form-buttons {
+        flex-direction: column;
+    }
+    
+    table {
+        font-size: 0.9rem;
+    }
+    
+    thead th, tbody td {
+        padding: 10px 8px;
+    }
+    
+    /* На мобильных скрываем ID */
+    table th:nth-child(1),
+    table td:nth-child(1) {
+        display: none;
+    }
+    
+    /* На мобильных также сдвигаем кнопки влево */
+    .action-buttons {
+        gap: 10px;
+        justify-content: flex-start;
+    }
+    
+    .btn-action {
+        width: 38px;
+        height: 38px;
+        padding: 8px 10px;
+        font-size: 15px;
+    }
+    
+    /* Выравнивание на мобильных */
+    thead th:nth-child(5),
+    tbody td:nth-child(5) {
+        padding-left: 10px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 10px;
+    }
+    
+    /* Кнопки в поиске на мобильных */
+    .single-task .mt-3 {
+        gap: 8px;
+    }
+}

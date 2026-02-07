@@ -1,0 +1,61 @@
+{
+  "name": "task-manager",
+  "version": "1.0.0",
+  "main": "electron/main.js",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "electron": "electron .",
+    "electron-build": "ng build --base-href ./ && electron .",
+    "electron-package": "ng build --base-href ./ && electron-builder --linux"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "~17.0.0",
+    "@angular/common": "~17.0.0",
+    "@angular/compiler": "~17.0.0",
+    "@angular/core": "~17.0.0",
+    "@angular/forms": "~17.0.0",
+    "@angular/platform-browser": "~17.0.0",
+    "@angular/platform-browser-dynamic": "~17.0.0",
+    "@angular/router": "~17.0.0",
+    "@fortawesome/fontawesome-free": "^7.1.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.14.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~17.0.0",
+    "@angular/cli": "~17.0.0",
+    "@angular/compiler-cli": "~17.0.0",
+    "@types/node": "^20.0.0",
+    "electron": "^25.0.0",
+    "electron-builder": "^24.0.0",
+    "typescript": "~5.2.0"
+  },
+  "build": {
+    "appId": "com.taskmanager.app",
+    "productName": "Task Manager",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm"
+      ],
+      "category": "Utility"
+    },
+    "files": [
+      "**/*",
+      "!src/**/*.ts",
+      "!angular.json",
+      "!tsconfig.json",
+      "!*.md"
+    ]
+  }
+}
