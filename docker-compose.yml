@@ -1,16 +1,53 @@
 services:
-  app:
-    build: .
+  backend:
+    build: 
+      context: . 
+      dockerfile: backend/Dockerfile
+    container_name: task-backend
     ports:
       - "8000:8000"
     volumes:
-      - ./api:/app/api  
-    command: uvicorn api.app:app --host 0.0.0.0 --port 8000 --reload
+      - backend-data:/app/data
+    environment:
+      - DATABASE_URL=sqlite:////app/data/tasks.db
+      - CORS_ORIGINS=http://localhost:3000
+    command: uvicorn app:app --host 0.0.0.0 --port 8000 --workers 2
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./frontend 
+      dockerfile: Dockerfile
+    container_name: task-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - app-network
 
   tests:
-    build:
+    build:  
       context: .
-      dockerfile: dockerfile.test
+      dockerfile: tests_backend/Dockerfile
     volumes:
-      - .:/app
-    command: python -m pytest -k 'TestApi' -v
+      - ./tests_backend:/app/tests_backend
+    container_name: task-tests
+    depends_on:
+      - backend
+    environment:
+      - DATABASE_URL=sqlite:////app/test_tasks.db
+      - TESTING=True
+    command: ["sh", "-c", "cd /app && python3 -m pytest tests_backend/ -v --tb=short -s"]
+    networks:
+      - app-network  
+
+volumes:
+  backend-data:
+
+networks:
+  app-network:
+    driver: bridge
