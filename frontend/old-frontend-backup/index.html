@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Менеджер задач</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-tasks"></i> Менеджер задач</h1>
+            <p class="subtitle">Интерфейс для управления задачами</p>
+        </header>
+
+        <!-- Поиск задачи по ID -->
+        <section class="search-task">
+            <h2><i class="fas fa-search"></i> Найти задачу по ID</h2>
+            <p class="search-note">
+                <small><i class="fas fa-info-circle"></i> ID задачи - это уникальный номер, который не меняется при удалении других задач</small>
+            </p>
+            <div class="search-form">
+                <div class="form-group">
+                    <label for="searchId"><i class="fas fa-hashtag"></i> ID задачи</label>
+                    <div class="search-input-group">
+                        <input type="number" id="searchId" placeholder="Введите ID задачи" min="1">
+                        <button type="button" class="btn btn-primary" id="searchBtn">
+                            <i class="fas fa-search"></i> Найти
+                        </button>
+                    </div>
+                </div>
+                <div id="searchResult" class="search-result">
+                    <!-- Результат поиска будет здесь -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Форма для создания/редактирования -->
+        <section class="task-form">
+            <h2><i class="fas fa-edit"></i> Создать / Редактировать задачу</h2>
+            <form id="taskForm">
+                <input type="hidden" id="taskId">
+                
+                <div class="form-group">
+                    <label for="title"><i class="fas fa-heading"></i> Заголовок*</label>
+                    <input type="text" id="title" required placeholder="Введите заголовок задачи">
+                </div>
+                
+                <div class="form-group">
+                    <label for="description"><i class="fas fa-align-left"></i> Описание</label>
+                    <textarea id="description" rows="3" placeholder="Подробное описание задачи"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="priority"><i class="fas fa-exclamation-circle"></i> Приоритет</label>
+                    <select id="priority">
+                        <option value="low">Низкий</option>
+                        <option value="medium" selected>Средний</option>
+                        <option value="high">Высокий</option>
+                    </select>
+                </div>
+                
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                        <i class="fas fa-plus"></i> Создать задачу
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="cancelBtn" style="display:none;">
+                        <i class="fas fa-times"></i> Отмена
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Таблица с задачами -->
+        <section class="task-table">
+            <div class="table-header">
+                <h2><i class="fas fa-list"></i> Список всех задач</h2>
+                <div class="loading" id="loadingIndicator">
+                    <i class="fas fa-spinner fa-spin"></i> Загрузка...
+                </div>
+            </div>
+            
+            <div class="table-responsive">
+                <table id="tasksTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Заголовок</th>
+                            <th>Описание</th>
+                            <th>Приоритет</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tasksTableBody">
+                        <!-- Задачи будут загружены через JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="empty-state" id="emptyState">
+                <i class="fas fa-inbox"></i>
+                <p>Задачи отсутствуют. Создайте первую!</p>
+            </div>
+        </section>
+        
+        <!-- Область для сообщений -->
+        <div id="messageArea"></div>
+    </div>
+
+    <!-- Модальное окно для подтверждения удаления -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-exclamation-triangle"></i> Подтверждение удаления</h3>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="warning-icon">
+                    <i class="fas fa-trash-alt"></i>
+                </div>
+                <p id="modalMessage">Вы уверены, что хотите удалить эту задачу?</p>
+                <div class="task-preview" id="taskPreview">
+                    <!-- Информация о задаче будет здесь -->
+                </div>
+                <p class="warning-text">
+                    <i class="fas fa-info-circle"></i> Это действие нельзя отменить.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="modalCancel">Отмена</button>
+                <button class="btn btn-danger" id="modalConfirm">Удалить</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
