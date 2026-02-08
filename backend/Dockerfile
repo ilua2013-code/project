@@ -5,13 +5,19 @@ RUN apt-get update && \
     python3 -m ensurepip --upgrade && \
     ln -s /usr/bin/pip3 /usr/bin/pip
 
+ENV PYTHONPATH=/app:$PYTHONPATH
+
 WORKDIR /app
 
 COPY requirements.txt .
 
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-COPY . .
+
+COPY backend/ ./backend/
+
+
+RUN touch /app/backend/__init__.py
 
 WORKDIR /app/backend
 
@@ -24,4 +30,4 @@ RUN echo "import sys" > /usr/lib/python3/site-packages/sitecustomize.py && \
     echo "except ImportError as e:" >> /usr/lib/python3/site-packages/sitecustomize.py && \
     echo "    print(f'[sitecustomize] Ошибка: {e}')" >> /usr/lib/python3/site-packages/sitecustomize.py
 
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]
+CMD ["uvicorn", "backend.app:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]

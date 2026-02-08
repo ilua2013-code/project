@@ -41,7 +41,7 @@ services:
     environment:
       - DATABASE_URL=sqlite:////app/test_tasks.db
       - TESTING=True
-    command: ["sh", "-c", "cd /app && python3 -m pytest tests_backend/ -v --tb=short -s"]
+    command: ["sh", "-c", "cd /app && python3 -m pytest tests_backend/  --tb=short "]
     networks:
       - app-network  
 

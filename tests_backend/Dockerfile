@@ -21,4 +21,3 @@ RUN echo "import sys" > /usr/lib/python3/site-packages/sitecustomize.py && \
     echo "    print(f'[sitecustomize] Ошибка: {e}')" >> /usr/lib/python3/site-packages/sitecustomize.py
 ENV PYTHONPATH=/app:$PYTHONPATH
 
-CMD ["python3", "-m", "pytest", "tests_backend"]

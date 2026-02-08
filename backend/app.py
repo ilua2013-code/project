@@ -1,7 +1,7 @@
 from fastapi import APIRouter, FastAPI, HTTPException
 from typing import List
-from task import task_service  
-from model import TaskModel, TaskResponse
+from backend.task import task_service  
+from backend.model import TaskModel, TaskResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 

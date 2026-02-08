@@ -1,6 +1,6 @@
 from typing import List, Optional
-from database import PureDatabase
-from model import PriorityModel, TaskRequest, TaskResponse
+from backend.database import PureDatabase
+from backend.model import PriorityModel, TaskRequest, TaskResponse
 
 class TaskService:
     def __init__(self):
