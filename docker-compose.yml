@@ -1,31 +1,42 @@
+version: '3.8'
+
 services:
   backend:
     build: 
-      context: . 
+      context: .
       dockerfile: backend/Dockerfile
-    container_name: task-backend
+    container_name: task-backend-dev
     ports:
       - "8000:8000"
     volumes:
       - backend-data:/app/data
+      - ./backend:/app/backend
+    working_dir: /app/backend 
     environment:
       - DATABASE_URL=sqlite:////app/data/tasks.db
-      - CORS_ORIGINS=http://localhost:3000
-    command: uvicorn app:app --host 0.0.0.0 --port 8000 --workers 2
-    restart: unless-stopped
+      - CORS_ORIGINS=http://localhost:4200
+      - PYTHONPATH=/app
+    command: python3 app.py  
     networks:
       - app-network
 
   frontend:
     build:
-      context: ./frontend 
+      context: ./frontend
       dockerfile: Dockerfile
-    container_name: task-frontend
+    container_name: task-frontend-dev
     ports:
-      - "3000:80"
-    depends_on:
-      - backend
-    restart: unless-stopped
+      - "4200:4200"
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/angular.json:/app/angular.json
+      - ./frontend/package.json:/app/package.json
+      - ./frontend/tsconfig.json:/app/tsconfig.json
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=1000
+    command: npx ng serve --host 0.0.0.0 --port 4200 --poll 2000
     networks:
       - app-network
 
@@ -41,9 +52,9 @@ services:
     environment:
       - DATABASE_URL=sqlite:////app/test_tasks.db
       - TESTING=True
-    command: ["sh", "-c", "cd /app && python3 -m pytest tests_backend/  --tb=short "]
+    command: ["sh", "-c", "cd /app && python3 -m pytest tests_backend/ --tb=short"]
     networks:
-      - app-network  
+      - app-network
 
 volumes:
   backend-data:

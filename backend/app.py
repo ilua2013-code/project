@@ -82,3 +82,7 @@ def delete_task(task_id: int):
             raise HTTPException(status_code=400, detail=str(e))
 
 app.include_router(tasks_router)
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)

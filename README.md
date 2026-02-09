@@ -25,14 +25,10 @@ bash
 git clone https://github.com/ilua2013-code/project
 cd project
 
+Шаг 2: Сборка образов
+docker-compose build
 
-Шаг 2: Сборка фронтенда
-cd frontend
-npm ci          
-npm run build --prod  
-cd ..
-
-шаг 3 Запуск всех сервисов в фоновом режиме
+шаг 3: Запуск всех сервисов в фоновом режиме
 docker-compose up -d
 
 # Проверка статуса

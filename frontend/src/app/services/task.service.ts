@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-const API_BASE_URL = '/api/v1/tasks';
+const API_BASE_URL = 'http://localhost:8000/api/v1/tasks';
 
 export interface Task {
   id?: number;

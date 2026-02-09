@@ -1,11 +1,3 @@
-# Node.js dependencies
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# Python
 __pycache__/
 *.py[cod]
 *$py.class
@@ -13,7 +5,6 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -27,26 +18,23 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
-
-# Virtual environments
 venv/
 env/
 .venv/
-
-
-
-# IDE
 .vscode/
 .idea/
 *.swp
 *.swo
-
-# OS
 .DS_Store
 Thumbs.db
-
-# Backend specific
 *.db
 *.sqlite3
 .env
 .env.local
+*.log
+*.tmp
+*.pid
+.coverage
+htmlcov/
+.tox/
+.pytest_cache/

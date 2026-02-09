@@ -1,24 +1,35 @@
 FROM alt:p11
 
+# Установка системных зависимостей
 RUN apt-get update && apt-get install -y \
-    nginx \
     curl \
+    xz \
+    glibc \
+    libstdc++6 \
     && rm -rf /var/lib/apt/lists/*
 
-RUN groupadd -r nginx && useradd -r -g nginx nginx
+# Установка Node.js
+RUN curl -fsSL https://nodejs.org/dist/v18.20.4/node-v18.20.4-linux-x64.tar.xz \
+    | tar -xJ -C /usr/local --strip-components=1
 
-COPY ./dist/task-manager /var/www/html
+# Устанавливаем PATH для Node.js
+ENV PATH="/usr/local/bin:$PATH"
 
-COPY nginx.conf /etc/nginx/nginx.conf
+# Проверяем установку Node.js
+RUN node --version && npm --version
 
-RUN chown -R nginx:nginx /var/www/html && \
-    chmod -R 755 /var/www/html && \
-    mkdir -p /var/log/nginx && \
-    chown -R nginx:nginx /var/log/nginx
+WORKDIR /app
 
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost/ || exit 1
+# Копирование зависимостей
+COPY package*.json ./
 
-EXPOSE 80
+# Установка зависимостей Angular
+RUN npm ci --legacy-peer-deps --omit=optional
 
-CMD ["nginx", "-g", "daemon off;"]
+# Установка esbuild (после основных зависимостей)
+RUN npm install esbuild --save-dev
+
+# Копирование исходного кода
+COPY . .
+
+EXPOSE 4200
