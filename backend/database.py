@@ -1,9 +1,4 @@
-try:
-    import pysqlite3 as sqlite3
-    print("[INFO] Используется pysqlite3")
-except ImportError:
-    import sqlite3  # Резервный вариант
-    print("[INFO] Используется стандартный sqlite3")
+import pysqlite3 as sqlite3
 from typing import List, Optional, Dict, Any  
 
 

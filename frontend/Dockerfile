@@ -1,33 +1,15 @@
-FROM node:18-alpine AS angular-build
-
-RUN apk add --no-cache python3 make g++
-
-WORKDIR /app
-
-COPY package*.json ./
-RUN npm ci --only=production
-
-COPY . .
-RUN npm run build --prod
-
-
 FROM alt:p11
-
 
 RUN apt-get update && apt-get install -y \
     nginx \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-
 RUN groupadd -r nginx && useradd -r -g nginx nginx
 
-
-COPY --from=angular-build /app/dist/task-manager /var/www/html
-
+COPY ./dist/task-manager /var/www/html
 
 COPY nginx.conf /etc/nginx/nginx.conf
-
 
 RUN chown -R nginx:nginx /var/www/html && \
     chmod -R 755 /var/www/html && \
