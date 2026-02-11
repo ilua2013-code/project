@@ -31,38 +31,15 @@ docker-compose build
 шаг 3: Запуск всех сервисов в фоновом режиме
 docker-compose up -d
 
-# Проверка статуса
-docker-compose ps
+шаг 4: Зайти в контейнер backend
+docker exec -it task-backend-dev bash
 
+шаг 5: Зайти в директорию с тестами 
+cd /app
 
-Фронтенд: http://localhost:3000
+шаг 6: Запуск тестов 
+pytest -m "api_unit"
+pytest -m "unit"
 
-Бэкенд API: http://localhost:8000
-
-Документация API: http://localhost:8000/docs
-
-
-# Запуск всех тестов (26 тестов)
-docker-compose up tests
-
-# Запуск с пересборкой
-docker-compose up --build tests
-
-# Запуск с детальным выводом
-docker-compose run --rm tests pytest tests_backend/ -v
-
-# Только API тесты (16 тестов)
-docker-compose run --rm tests pytest tests_backend/ -k "TestApi" -v
-
-# Только юнит-тесты сервисов (10 тестов)
-
-docker-compose run --rm tests pytest tests_backend/ -k "TestTaskService" -v
-
-# С покрытием кода
-python -m pytest --cov=api --cov-report=term-missing
-
-# остановить сервисы
-docker-compose stop  # остановить сервисы
-
-# остановить и удалить контейнеры
-docker-compose down  # остановить и удалить контейнеры
+шаг 7: Остановка
+docker compose down 

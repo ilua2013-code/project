@@ -1,35 +1,32 @@
 FROM alt:p11
 
-# Установка системных зависимостей
-RUN apt-get update && apt-get install -y \
-    curl \
-    xz \
-    glibc \
-    libstdc++6 \
-    && rm -rf /var/lib/apt/lists/*
 
-# Установка Node.js
-RUN curl -fsSL https://nodejs.org/dist/v18.20.4/node-v18.20.4-linux-x64.tar.xz \
-    | tar -xJ -C /usr/local --strip-components=1
+RUN apt-get update && apt-get install -y node npm && rm -rf /var/lib/apt/lists/*
 
-# Устанавливаем PATH для Node.js
-ENV PATH="/usr/local/bin:$PATH"
 
-# Проверяем установку Node.js
-RUN node --version && npm --version
+RUN groupadd -r appuser && useradd -r -g appuser -m -d /home/appuser appuser
+
+
+RUN mkdir -p /app && chown -R appuser:appuser /app
+
+
+ENV NPM_CONFIG_CACHE=/tmp/.npm
+RUN mkdir -p /tmp/.npm && chown -R appuser:appuser /tmp/.npm
 
 WORKDIR /app
 
-# Копирование зависимостей
-COPY package*.json ./
 
-# Установка зависимостей Angular
-RUN npm ci --legacy-peer-deps --omit=optional
+COPY --chown=appuser:appuser package*.json ./
+RUN npm ci --legacy-peer-deps
 
-# Установка esbuild (после основных зависимостей)
-RUN npm install esbuild --save-dev
 
-# Копирование исходного кода
-COPY . .
+RUN npm install -g @angular/cli
+
+
+USER appuser
+
+
+COPY --chown=appuser:appuser . .
 
 EXPOSE 4200
+CMD ["ng", "serve", "--host", "0.0.0.0", "--port", "4200", "--disable-host-check"]
