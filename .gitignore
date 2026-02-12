@@ -39,3 +39,5 @@ htmlcov/
 .tox/
 .pytest_cache/
 .angular
+node_modules/electron/
+node_modules/electron-builder/
