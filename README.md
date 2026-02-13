@@ -25,14 +25,15 @@ bash
 git clone https://github.com/ilua2013-code/project
 cd project
 
-Шаг 2: Сборка образов
-docker-compose build
+Шаг 2: Скачивание готовых образов с Docker Hub
+docker pull iluavolkov/task-backend:latest
+docker pull iluavolkov/task-frontend:latest
 
 шаг 3: Запуск всех сервисов в фоновом режиме
-docker-compose up -d
+docker compose -f docker-compose.publish.yml up -d
 
 шаг 4: Зайти в контейнер backend
-docker exec -it task-backend-dev bash
+docker exec -it task-backend bash
 
 шаг 5: Зайти в директорию с тестами 
 cd /app

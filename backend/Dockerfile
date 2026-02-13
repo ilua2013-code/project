@@ -4,7 +4,7 @@ RUN apt-get update && \
     apt-get install -y \
     python3 \
     python3-devel \
-    glibc \ 
+    glibc \
     sqlite3 \
     && rm -rf /var/lib/apt/lists/*
 
@@ -25,16 +25,14 @@ RUN ln -s /usr/bin/python3 /usr/bin/python && \
 
 WORKDIR /app
 
-
 COPY requirements.txt .
 RUN python3 -m pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org -r requirements.txt
-
 
 COPY backend/ ./backend/
 COPY tests_backend/ ./tests_backend/
 COPY pytest.ini ./
 
-
 ENV PYTHONPATH=/app:$PYTHONPATH
 
 WORKDIR /app/backend
+CMD ["python", "app.py"]
